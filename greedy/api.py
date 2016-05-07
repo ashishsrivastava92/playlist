@@ -29,9 +29,9 @@ class GenreResource(ModelResource):
             genre_context = load.get('Context')[0]
             genre = Genre.objects.create(name=genre_name, context=genre_context)
             genre.save()
-            data = {'status': 200, 'message': 'Genre updated successfully'}
+            data = {'status': 200, 'message': 'Genre added successfully'}
         except:
-            data = {'status': 200, 'message': 'Genre updated successfully'}
+            data = {'status': 500, 'message': 'Genre Already exists'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
     def edit_genre(self, request, **kwargs):
@@ -46,7 +46,7 @@ class GenreResource(ModelResource):
             genre.save()
             data = {'status': 200, 'message': 'Genre updated successfully'}
         except:
-            data = {'status': 504, 'message': 'Error In Data'}
+            data = {'status': 500, 'message': 'Error In Data'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
 
@@ -76,7 +76,7 @@ class TrackResource(ModelResource):
             track.save()
             data = {'status': 200, 'message': 'Song updated successfully'}
         except:
-            data = {'status': 504, 'message': 'Error In Data'}
+            data = {'status': 500, 'message': 'Error In Data'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
     def edit_track(self, request, **kwargs):
@@ -92,7 +92,7 @@ class TrackResource(ModelResource):
             track.save()
             data = {'status': 200, 'message': 'Song updated successfully'}
         except:
-            data = {'status': 504, 'message': 'Error In Data'}
+            data = {'status': 500, 'message': 'Error In Data'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
 
@@ -104,11 +104,6 @@ class AjaxSearchResource(Resource):
 
     def post_list(self, request, **kwargs):
         phrase = request.POST.get('q')
-        print phrase
         if phrase:
-            print phrase
-            try:
-                tracks = list(Track.objects.filter(name__icontains=phrase).values('id', 'name'))
-            except Exception as e:
-                print e
-            return self.create_response(request, {'tracks': tracks})
+            tracks = list(Track.objects.filter(name__icontains=phrase).values('id', 'name'))
+        return self.create_response(request, {'tracks': tracks})

@@ -41,14 +41,15 @@
                 data: jsonToSend,
                 datatype : "application/json",
                 <!--contenttype : "application/json",-->
+
                 success: function(){
-                    location.href="/greedy/genres/"
+                    if (status ==200)
+                        location.href="/greedy/genres/"
+                    else
+                        alert('Already Exists')
+                        location.href="/greedy/genres/"
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("some error");
-                    alert(textStatus);
-                    location.href="/greedy/genres/"
-                    }
+
                 })
         console.log( jsonToSend );
     });

@@ -46,12 +46,13 @@
                 datatype : "application/json",
                 <!--contenttype : "application/json",-->
                 success: function(){
-                    location.href="/greedy/tracks/"
+                    if (status == 200)
+                        location.href="/greedy/tracks/"
+                    else
+                        alert("Already Exists")
+                        location.href="/greedy/tracks/"
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("some error");
-                    alert(textStatus);
-                    }
+
                 })
         console.log( jsonToSend );
     });

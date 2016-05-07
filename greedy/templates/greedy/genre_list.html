@@ -30,17 +30,45 @@
                                         <label>Genre &nbsp;: </label>
                                         <input type="text" value ="{{Genre.name}}" id="{{ Genre.id }}" ><br><br>
                                         <label>Context &nbsp;: </label><br>
-                                        <input type="textfield" value="{{Genre.context}}" id = "genre_context"><br>
+                                        <input type="textfield" value="{{Genre.context}}" id = "genre_context{{forloop.counter}}"><br>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-danger" id="submit-genre-data">Submit Changes</button>
+                                        <button type="submit" class="btn btn-danger" id="submit-genre-data{{forloop.counter}}">Submit Changes</button>
                                     </div>
                                 </div>
                             </div>
                     </div>
                 </ul>
             </div>
+
+
+<script >
+    $('#submit-genre-data{{forloop.counter}}').on('click', function(){
+
+        alert('Confirm');
+        var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
+                            'Genre': $(this)[0].parentElement.parentElement.children[1].children[1].value,
+                             'Context':$("#genre_context{{forloop.counter}}").val()
+                             }
+
+        $.ajax({
+            type: "POST",
+            url: '/greedy/api/v1/Genres/edit/'+ jsonToSend.id + '/',
+            data: jsonToSend,
+            datatype : "application/json",
+            success: function(){
+                location.href="/greedy/genres/"
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error in Data");
+                    location.href="/greedy/genres/"
+                    }
+        })
+        console.log( jsonToSend );
+    });
+</script>
+
         {% endfor %}
         </table>
     </ul>
@@ -65,25 +93,4 @@
 
 
 
-<script >
-    $('#submit-genre-data').on('click', function(){
-
-        alert('Confirm');
-        var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
-                            'Genre': $(this)[0].parentElement.parentElement.children[1].children[1].value,
-                             'Context':$("#genre_context").val()
-                             }
-
-        $.ajax({
-            type: "POST",
-            url: '/greedy/api/v1/Genres/edit/'+ jsonToSend.id + '/',
-            data: jsonToSend,
-            datatype : "application/json",
-            success: function(){
-                location.href="/greedy/genres/"
-            },
-        })
-        console.log( jsonToSend );
-    });
-</script>
 {% endblock %}

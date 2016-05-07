@@ -1,0 +1,172 @@
+{% extends "greedy/index.html" %}
+
+{% block content %}
+
+<div align="center">
+<div id="viewTrackModal"></div>
+
+    <h2>Songs</h2>
+    <div id="search_content">
+
+        <form action="">
+            {% csrf_token %}
+            <label>Search song :</label>
+            <input id="query" name="query" type="text" placeholder="Search..." />
+        </form>
+    </div>
+    
+    <ul>
+    
+    
+        <table align="center" >
+        {% for Song in object_list %}
+            <div class="genre_disp" align="center">
+                <ul>
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                    <a id="song" href =  "{% url 'track_details' Song.id %}">{{ Song.name }}</a>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    </div>
+<!--                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal{{ forloop.counter }}">Edit</button>-->
+                    
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" onclick="createTrackModel('viewTrackModal','abhishek')" >Edit</button>
+
+                    <div id="myModal{{ forloop.counter }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                        <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Song to Edit</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <label>Song &nbsp;: </label>
+                                    <input type="text" value ="{{Song.name}}" id="{{ Song.id }}" ><br><br>
+                                    <label>Genre :</label> <input type="text" value="{{Song.genre}}" disabled>
+                                    <select id="hello" name = 'distributor_dropdown' class = 'form-control' >
+                                        {% for entry in gene %}
+                                            <option value = "{{entry}}" >{{entry}}</option>
+                                        {% endfor %}}
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger" id="submit-track-data">Submit Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+                </ul>
+            </div>
+        {% endfor %}
+        </table>
+    </ul>
+</div>
+{% endblock %}
+<!--{% for contact in contacts %}-->
+    <!--{# Each "contact" is a Contact   model object. #}-->
+    <!--{{ contact.full_name|upper }}<br />-->
+    <!--...-->
+<!--{% endfor %}-->
+
+
+
+{% block pagination %}
+{% include 'snippets/pagination.html' %}
+{% endblock%}
+
+{% block track_add %}
+{% include 'snippets/track_add.html' %}
+{% endblock %}
+
+{% block js %}
+
+
+<script >
+
+function createTrackModel(divid, p_data) {
+
+alert(divid);
+alert(p_data);
+
+
+  $("#viewTrackModal").append("<div data-toggle='modal' data-target='modelTrackDivId' />");
+
+  $("#modelTrackDivId").append("<div id='modelTrackDivId1' class='modal fade' role='dialog' />");
+
+  $("#modelTrackDivId1").append("<div id='modalDialogId' class='modal-dialog' />");
+
+    $("#modalDialogId").append("<div id='modalContantId' class='modal-content' />");
+		// create modal header
+    $("#modalContantId").append("<div id='modalContantId' class='modal-header' >"
+    +"<button type='button' class='close' data-dismiss='modal'>&times;</button>"
+    +"<h4 class='modal-title'>Song to Edit</h4>");
+	// create modal body
+    $("#modalContantId").append("<div id='modalContantBodyId' class='modal-body' >");
+    // create modal footer
+        $("#modalContantId").append("<div id='modalContantBodyId' class='modal-body' > Model body </div>");
+    
+    
+    
+    $("#modalContantId").append("<div id='modalContantFooterId' class='modal-footer' >");
+    $("#modalContantFooterId").append("<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>");
+    $("#modalContantFooterId").append("<button type='submit' class='btn btn-danger' id='submit-track-data'>Submit Changes</button>");
+
+
+
+
+
+
+/*
+                    <div id="myModal{{ forloop.counter }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                        <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Song to Edit</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <label>Song &nbsp;: </label>
+                                    <input type="text" value ="{{Song.name}}" id="{{ Song.id }}" ><br><br>
+                                    <label>Genre :</label> <input type="text" value="{{Song.genre}}" disabled>
+                                    <select id="hello" name = 'distributor_dropdown' class = 'form-control' >
+                                        {% for entry in gene %}
+                                            <option value = "{{entry}}" >{{entry}}</option>
+                                        {% endfor %}}
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger" id="submit-track-data">Submit Changes</button>
+                                </div>
+                            </div>
+                        </div>s
+*/
+
+}
+
+    $('#submit-track-data').on('click', function(){
+
+        alert('Confirm');
+        var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
+                            'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,
+                            'Genre' : document.getElementById("hello").options[document.getElementById('hello').selectedIndex].text
+                             }
+
+        $.ajax({
+            type: "POST",
+            url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',
+            data: jsonToSend,
+            datatype : "application/json",
+            success: function(){
+                location.href="/greedy/tracks/"
+            },
+        })
+        console.log( jsonToSend );
+    });
+</script>
+{% endblock %}
+

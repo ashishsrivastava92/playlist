@@ -16,7 +16,6 @@
     <ul>
         <table align="center" >
         {% for Song in object_list %}
-
             <div class="genre_disp" align="center">
                 <ul padding=20>
                     <div class="col-lg-12">
@@ -41,7 +40,7 @@
                                         <label>Song &nbsp;: </label>
                                         <input type="text" value ="{{Song.name}}" id="{{ Song.id }}" ><br><br>
                                         <label>Genre :</label> <input type="text" value="{{Song.genre}}" disabled>
-                                        <select id="hello" name = 'distributor_dropdown' class = 'form-control' >
+                                        <select id="hello{{ forloop.counter }}" name = 'distributor_dropdown' class = 'form-control' >
 								            {% for entry in gene %}
 									            <option value = "{{entry}}" >{{entry}}</option>
 								            {% endfor %}}
@@ -49,7 +48,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-danger" id="submit-track-data">Submit Changes</button>
+                                        <button type="submit" class="btn btn-danger" id="submit-track-data{{ forloop.counter }}">Submit Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -57,6 +56,31 @@
                     </div>
                 </ul>
             </div>
+<script >
+    $('#submit-track-data{{ forloop.counter }}').on('click', function(){
+
+        alert('Confirm');
+        var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
+                            'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,
+                            'Genre' : document.getElementById("hello{{ forloop.counter }}").options[document.getElementById('hello{{ forloop.counter }}').selectedIndex].text
+                             }
+
+        $.ajax({
+            type: "POST",
+            url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',
+            data: jsonToSend,
+            datatype : "application/json",
+            success: function(){
+                location.href="/greedy/tracks/"
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error in Data");
+                    location.href="/greedy/genres/"
+                    }
+        })
+        console.log( jsonToSend );
+    });
+</script>
         {% endfor %}
         </table>
     </ul>
@@ -81,26 +105,26 @@
 {% block js %}
 
 
-<script >
-    $('#submit-track-data').on('click', function(){
+<!--<script >-->
+    <!--$('#submit-track-data').on('click', function(){-->
 
-        alert('Confirm');
-        var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
-                            'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,
-                            'Genre' : document.getElementById("hello").options[document.getElementById('hello').selectedIndex].text
-                             }
+        <!--alert('Confirm');-->
+        <!--var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,-->
+                            <!--'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,-->
+                            <!--'Genre' : document.getElementById("hello").options[document.getElementById('hello').selectedIndex].text-->
+                             <!--}-->
 
-        $.ajax({
-            type: "POST",
-            url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',
-            data: jsonToSend,
-            datatype : "application/json",
-            success: function(){
-                location.href="/greedy/tracks/"
-            },
-        })
-        console.log( jsonToSend );
-    });
-</script>
+        <!--$.ajax({-->
+            <!--type: "POST",-->
+            <!--url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',-->
+            <!--data: jsonToSend,-->
+            <!--datatype : "application/json",-->
+            <!--success: function(){-->
+                <!--location.href="/greedy/tracks/"-->
+            <!--},-->
+        <!--})-->
+        <!--console.log( jsonToSend );-->
+    <!--});-->
+<!--</script>-->
 {% endblock %}
 
