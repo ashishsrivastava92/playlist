@@ -1,0 +1,60 @@
+{% block track_add %}
+
+<div align="center">
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addModal_track">Add Song</button>
+<div id="addModal_track" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                            <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Song to Add</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <label>Song &nbsp;: </label>
+                                        <input type="text" value = "" ><br><br>
+                                        <label>Genre :</label>
+                                        <select name = 'distributor_dropdown' class = 'form-control' id ='add_genre' >
+								            {% for entry in gene %}
+									            <option value = "{{entry}}" >{{entry}}</option>
+								            {% endfor %}}
+							            </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger" id="track_data">Submit Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+</div>
+<!---->
+<script>
+    $('#track_data').on('click', function(){
+        alert('confirm');
+
+        var jsonToSend = { 'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,
+                            'Genre' : document.getElementById("add_genre").options[document.getElementById('add_genre').selectedIndex].text
+                             }
+
+        console.log( jsonToSend );
+        $.ajax({
+                type: "POST",
+                url: "/greedy/api/v1/Tracks/adds/",
+                data: jsonToSend,
+                datatype : "application/json",
+                <!--contenttype : "application/json",-->
+                success: function(){
+                    location.href="/greedy/tracks/"
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("some error");
+                    alert(textStatus);
+                    }
+                })
+        console.log( jsonToSend );
+    });
+</script>
+{% endblock %}
+

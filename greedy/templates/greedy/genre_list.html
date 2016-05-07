@@ -1,0 +1,89 @@
+{% extends "greedy/index.html" %}
+
+{% block content %}
+<div align="center">
+    <h2>Genre</h2>
+    <ul>
+        <table align="center">
+        {% for Genre in object_list %}
+            <div class="genre_disp">
+                <ul>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                        <a href =  "{% url 'genre_details' Genre.id %}">{{ Genre.name }}</a>
+                            &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                        </div>
+                        <!--<div class="edit">ABC</div>-->
+
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#genreModal{{ forloop.counter }}">Edit</button>
+
+                        <div id="genreModal{{ forloop.counter }}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                            <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Genre to Edit</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <label>Genre &nbsp;: </label>
+                                        <input type="text" value ="{{Genre.name}}" id="{{ Genre.id }}" ><br><br>
+                                        <label>Context &nbsp;: </label><br>
+                                        <input type="textfield" value="{{Genre.context}}" id = "genre_context"><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger" id="submit-genre-data">Submit Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </ul>
+            </div>
+        {% endfor %}
+        </table>
+    </ul>
+</div>
+{% endblock %}
+
+<!--{% for contact in contacts %}-->
+    <!--{# Each "contact" is a Contact model object. #}-->
+    <!--{{ contact.full_name|upper }}<br />-->
+    <!--...-->
+<!--{% endfor %}-->
+
+{% block pagination %}
+{% include 'snippets/pagination.html' %}
+{% endblock%}
+
+{% block genre_add %}
+{% include 'snippets/genre_add.html' %}
+{% endblock %}
+
+{% block js %}
+
+
+
+<script >
+    $('#submit-genre-data').on('click', function(){
+
+        alert('Confirm');
+        var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
+                            'Genre': $(this)[0].parentElement.parentElement.children[1].children[1].value,
+                             'Context':$("#genre_context").val()
+                             }
+
+        $.ajax({
+            type: "POST",
+            url: '/greedy/api/v1/Genres/edit/'+ jsonToSend.id + '/',
+            data: jsonToSend,
+            datatype : "application/json",
+            success: function(){
+                location.href="/greedy/genres/"
+            },
+        })
+        console.log( jsonToSend );
+    });
+</script>
+{% endblock %}

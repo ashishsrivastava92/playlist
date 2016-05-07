@@ -1,0 +1,44 @@
+
+
+{% if is_paginated %}
+
+    <table class="pagination">
+        <tr>
+        {% if page_obj.has_previous %}
+        <td>
+          <a href="?page={{ page_obj.previous_page_number }}">
+            <span>Previous</span>
+          </a>
+        </td>
+      {% else %}
+        <td class="disabled">
+          <a href="#">
+            <span>&nbsp; Previous  </span>
+          </a>
+        </td>
+      {% endif %}
+
+      {% for page in paginator.page_range %}
+        <td {% if page == page_obj.number %}class="active"{% endif %}>
+          <a href="?page={{ page }}">&nbsp;{{ page }} &nbsp;</a>
+        </td>
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <td>
+          <a href="?page={{ page_obj.next_page_number }}">
+            <span>Next</span>
+          </a>
+        </td>
+      {% else %}
+        <td {% if not page_obj.has_next %}class="disabled"{% endif %}>
+          <a href="#">
+            <span>Next</span>
+          </a>
+        </td>
+      {% endif %}
+        </tr>
+    </table>
+
+
+{% endif %}
