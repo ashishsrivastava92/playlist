@@ -71,13 +71,11 @@
             url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',
             data: jsonToSend,
             datatype : "application/json",
-            success: function(){
+            success: function(data){
+                alert(data.message)
                 location.href="/greedy/tracks/"
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Error in Data");
-                    location.href="/greedy/genres/"
-                    }
+
         })
         console.log( jsonToSend );
     });

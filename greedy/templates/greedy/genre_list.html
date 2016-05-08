@@ -57,13 +57,11 @@
             url: '/greedy/api/v1/Genres/edit/'+ jsonToSend.id + '/',
             data: jsonToSend,
             datatype : "application/json",
-            success: function(){
-                location.href="/greedy/genres/"
+            success: function(data){
+            alert(data.message)
+            location.href="/greedy/genres/"
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Error in Data");
-                    location.href="/greedy/genres/"
-                    }
+
         })
         console.log( jsonToSend );
     });

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/playlist.iml" filepath="$PROJECT_DIR$/.idea/playlist.iml" />
-      <module fileurl="file://$USER_HOME$/Tango/tango_with_django/.idea/tango_with_django.iml" filepath="$USER_HOME$/Tango/tango_with_django/.idea/tango_with_django.iml" />
     </modules>
   </component>
 </project>
