@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Star-Rating
-STAR_RATINGS_RERATE = False
+STAR_RATINGS_RERATE = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
