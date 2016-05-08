@@ -45,13 +45,14 @@
                 data: jsonToSend,
                 datatype : "application/json",
                 <!--contenttype : "application/json",-->
-                success: function(){
-                    if (status == 200)
-                        location.href="/greedy/tracks/"
+                success: function(data){
+                    if (data.status == 200)
+                    location.href="/greedy/tracks/"
                     else
-                        alert("Already Exists")
-                        location.href="/greedy/tracks/"
+                    alert(data.message)
+                    location.href="/greedy/tracks/"
                 },
+
 
                 })
         console.log( jsonToSend );

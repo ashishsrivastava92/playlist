@@ -42,12 +42,12 @@
                 datatype : "application/json",
                 <!--contenttype : "application/json",-->
 
-                success: function(){
-                    if (status ==200)
-                        location.href="/greedy/genres/"
+                success: function(data){
+                    if (data.status ==200)
+                    location.href="/greedy/genres/"
                     else
-                        alert('Already Exists')
-                        location.href="/greedy/genres/"
+                    alert(data.message)
+                    location.href="/greedy/genres/"
                 },
 
                 })

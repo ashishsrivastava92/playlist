@@ -76,7 +76,7 @@ class TrackResource(ModelResource):
             track.save()
             data = {'status': 200, 'message': 'Song updated successfully'}
         except:
-            data = {'status': 500, 'message': 'Error In Data'}
+            data = {'status': 500, 'message': 'Already exists'}
         return HttpResponse(json.dumps(data), content_type="application/json")
 
     def edit_track(self, request, **kwargs):
