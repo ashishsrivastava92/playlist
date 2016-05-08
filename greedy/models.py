@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.fields import GenericRelation
+from star_ratings.models import Rating
 
 # Create your models here.
 class Genre(models.Model):
@@ -19,6 +20,7 @@ class Genre(models.Model):
 class Track(models.Model):
     genre = models.ForeignKey('Genre', null = True)
     name = models.CharField(max_length=30, unique= True)
+    ratings = GenericRelation(Rating, related_query_name='Tracks')
     # ratings = GenericRelation(Rating, related_query_name='Tracks')
     
     class Meta:

@@ -67,12 +67,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                
+                'django.core.context_processors.request',
             ],
         },
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = ['django.core.context_processors.request',
+
+]
 
 WSGI_APPLICATION = 'playlist.wsgi.application'
 
@@ -106,6 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# Star-Rating
+STAR_RATINGS_RERATE = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

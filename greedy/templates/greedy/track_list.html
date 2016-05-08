@@ -1,5 +1,5 @@
 {% extends "greedy/index.html" %}
-
+{% load ratings %}
 {% block content %}
 
 <div align="center">
@@ -22,9 +22,10 @@
                         <div class="col-lg-6">
                         <a id="song" href =  "{% url 'track_details' Song.id %}">{{ Song.name }}</a>
                             &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+
                         </div>
                         <!--<div class="edit">ABC</div>-->
-
+                            {% ratings Song 16 16%}
                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal{{ forloop.counter }}">Edit</button>
 
                         <div id="myModal{{ forloop.counter }}" class="modal fade" role="dialog">
