@@ -13,10 +13,7 @@
                         <a href =  "{% url 'genre_details' Genre.id %}">{{ Genre.name }}</a>
                             &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                         </div>
-                        <!--<div class="edit">ABC</div>-->
-
                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#genreModal{{ forloop.counter }}">Edit</button>
-
                         <div id="genreModal{{ forloop.counter }}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                             <!-- Modal content-->
@@ -26,7 +23,6 @@
                                         <h4 class="modal-title">Genre to Edit</h4>
                                     </div>
                                     <div class="modal-body">
-
                                         <label>Genre &nbsp;: </label>
                                         <input type="text" value ="{{Genre.name}}" id="{{ Genre.id }}" ><br><br>
                                         <label>Context &nbsp;: </label><br>
@@ -37,21 +33,17 @@
                                         <button type="submit" class="btn btn-danger" id="submit-genre-data{{forloop.counter}}">Submit Changes</button>
                                     </div>
                                 </div>
-                            </div>
+                           </div>
                     </div>
                 </ul>
             </div>
-
-
 <script >
     $('#submit-genre-data{{forloop.counter}}').on('click', function(){
-
         alert('Confirm');
         var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
                             'Genre': $(this)[0].parentElement.parentElement.children[1].children[1].value,
                              'Context':$("#genre_context{{forloop.counter}}").val()
                              }
-
         $.ajax({
             type: "POST",
             url: '/greedy/api/v1/Genres/edit/'+ jsonToSend.id + '/',
@@ -61,23 +53,15 @@
             alert(data.message)
             location.href="/greedy/genres/"
             },
-
         })
         console.log( jsonToSend );
     });
 </script>
-
         {% endfor %}
         </table>
     </ul>
 </div>
 {% endblock %}
-
-<!--{% for contact in contacts %}-->
-    <!--{# Each "contact" is a Contact model object. #}-->
-    <!--{{ contact.full_name|upper }}<br />-->
-    <!--...-->
-<!--{% endfor %}-->
 
 {% block pagination %}
 {% include 'snippets/pagination.html' %}
@@ -88,7 +72,4 @@
 {% endblock %}
 
 {% block js %}
-
-
-
 {% endblock %}
