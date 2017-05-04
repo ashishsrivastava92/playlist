@@ -1,5 +1,4 @@
 {% block track_add %}
-
 <div align="center">
 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addModal_track">Add Song</button>
 <div id="addModal_track" class="modal fade" role="dialog">
@@ -11,7 +10,6 @@
                                         <h4 class="modal-title">Song to Add</h4>
                                     </div>
                                     <div class="modal-body">
-
                                         <label>Song &nbsp;: </label>
                                         <input type="text" value = "" ><br><br>
                                         <label>Genre :</label>
@@ -37,7 +35,6 @@
         var jsonToSend = { 'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,
                             'Genre' : document.getElementById("add_genre").options[document.getElementById('add_genre').selectedIndex].text
                              }
-
         console.log( jsonToSend );
         $.ajax({
                 type: "POST",
@@ -52,11 +49,8 @@
                     alert(data.message)
                     location.href="/greedy/tracks/"
                 },
-
-
                 })
         console.log( jsonToSend );
     });
 </script>
 {% endblock %}
-
