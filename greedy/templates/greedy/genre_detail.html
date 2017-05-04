@@ -1,5 +1,4 @@
 {% extends "greedy/index.html" %}
-
 {% block hello %}
 	<h3 align="center"> Genre Details</h3>
 {% endblock %}
@@ -7,14 +6,13 @@
 {% block content %}
 	<p align="center" i><strong>Genre Name :</strong> {{ object.name }}</p> &nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p align = "center"><strong>Context :</strong> {{ object.context }}</p>
-
     <div align="center">
     <h2>Songs of this Genre</h2>
         <table align="center">
         {% for entry in tracks %}
             <div class="genre_disp" align="center">
                 <ul>
-                    <div class="col-lg-12" align="center">
+		    <div class="col-lg-12" align="center">
                         <div class="col-lg-16" align="center">
                         <a id="song" href =  "{% url 'track_details' entry.id %}">{{ entry.name }}</a>
                             &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
