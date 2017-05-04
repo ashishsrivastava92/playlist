@@ -1,5 +1,4 @@
 {% block genre_add %}
-
 <div align="center">
     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addModal_genre">Add Genre</button>
     <div id="addModal_genre" class="modal fade" role="dialog">
@@ -11,7 +10,6 @@
                     <h4 class="modal-title">Genre to Add</h4>
                 </div>
                 <div class="modal-body">
-
                     <label>Genre &nbsp;: </label>
                     <input type="text" value = "" id = "genre_add_name"><br><br>
                     <label>Context &nbsp;</label>
@@ -29,11 +27,9 @@
 <script>
     $('#genre_data').on('click', function(){
         alert('confirm');
-
         var jsonToSend = { 'Genre': $(this)[0].parentElement.parentElement.children[1].children[1].value,
                             'Context':$("#genre_add_context").val()
                              }
-
         console.log( jsonToSend );
         $.ajax({
                 type: "POST",
@@ -41,7 +37,6 @@
                 data: jsonToSend,
                 datatype : "application/json",
                 <!--contenttype : "application/json",-->
-
                 success: function(data){
                     if (data.status ==200)
                     location.href="/greedy/genres/"
@@ -49,10 +44,8 @@
                     alert(data.message)
                     location.href="/greedy/genres/"
                 },
-
                 })
         console.log( jsonToSend );
     });
 </script>
 {% endblock %}
-
