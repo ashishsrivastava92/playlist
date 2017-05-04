@@ -1,7 +1,4 @@
-
-
 {% if is_paginated %}
-
     <table class="pagination">
         <tr>
         {% if page_obj.has_previous %}
@@ -17,7 +14,7 @@
           </a>
         </td>
       {% endif %}
-
+            
       {% for page in paginator.page_range %}
         <td {% if page == page_obj.number %}class="active"{% endif %}>
           <a href="?page={{ page }}">&nbsp;{{ page }} &nbsp;</a>
@@ -39,6 +36,4 @@
       {% endif %}
         </tr>
     </table>
-
-
 {% endif %}
