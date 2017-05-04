@@ -59,13 +59,11 @@
             </div>
 <script >
     $('#submit-track-data{{ forloop.counter }}').on('click', function(){
-
         alert('Confirm');
         var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,
                             'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,
                             'Genre' : document.getElementById("hello{{ forloop.counter }}").options[document.getElementById('hello{{ forloop.counter }}').selectedIndex].text
                              }
-
         $.ajax({
             type: "POST",
             url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',
@@ -75,7 +73,6 @@
                 alert(data.message)
                 location.href="/greedy/tracks/"
             },
-
         })
         console.log( jsonToSend );
     });
@@ -85,13 +82,6 @@
     </ul>
 </div>
 {% endblock %}
-<!--{% for contact in contacts %}-->
-    <!--{# Each "contact" is a Contact   model object. #}-->
-    <!--{{ contact.full_name|upper }}<br />-->
-    <!--...-->
-<!--{% endfor %}-->
-
-
 
 {% block pagination %}
 {% include 'snippets/pagination.html' %}
@@ -100,30 +90,3 @@
 {% block track_add %}
 {% include 'snippets/track_add.html' %}
 {% endblock %}
-
-{% block js %}
-
-
-<!--<script >-->
-    <!--$('#submit-track-data').on('click', function(){-->
-
-        <!--alert('Confirm');-->
-        <!--var jsonToSend = { 'id': $(this)[0].parentElement.parentElement.children[1].children[1].id,-->
-                            <!--'Song': $(this)[0].parentElement.parentElement.children[1].children[1].value,-->
-                            <!--'Genre' : document.getElementById("hello").options[document.getElementById('hello').selectedIndex].text-->
-                             <!--}-->
-
-        <!--$.ajax({-->
-            <!--type: "POST",-->
-            <!--url: '/greedy/api/v1/Tracks/edit/'+ jsonToSend.id + '/',-->
-            <!--data: jsonToSend,-->
-            <!--datatype : "application/json",-->
-            <!--success: function(){-->
-                <!--location.href="/greedy/tracks/"-->
-            <!--},-->
-        <!--})-->
-        <!--console.log( jsonToSend );-->
-    <!--});-->
-<!--</script>-->
-{% endblock %}
-
